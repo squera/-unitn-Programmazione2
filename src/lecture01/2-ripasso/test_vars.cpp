@@ -2,8 +2,7 @@
 void f();
 void g();
 void modifica2();
-
-int gv;
+int vg;
 int x=5;
 void test_vars() {
     std::cout << "x in main " << x << std::endl;

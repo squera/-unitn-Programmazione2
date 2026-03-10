@@ -16,13 +16,6 @@ public class Player {
             System.out.println("Player died!");
         }
     }
-    public void isAlive(){
-        if (this.health <= 0 ){
-            System.out.println("Giocatore morto");
-        }else{
-            System.out.println("Giocatore vivo");
-        }
-    }
     public void poison() {
         this.setPoisoned(true);
     }
@@ -34,5 +27,12 @@ public class Player {
             return;
         }
         this.health -= 1;
+    }
+    public void isAlive(){
+        if (this.health <= 0 ){
+            System.out.println("Giocatore morto");
+        }else{
+            System.out.println("Giocatore vivo");
+        }
     }
 }

@@ -35,6 +35,7 @@ public class Lecture4 {
         Witch w2 = new Witch();
         Player p1 = new Player();
         Player p2 = new Player();
+        p2.username = "steve";
         p1.setPoisoned(true);
         p2.damage(10);
         TNT t1 = new TNT();

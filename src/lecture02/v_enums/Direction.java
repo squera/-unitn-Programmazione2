@@ -5,5 +5,8 @@ public enum Direction {
     SOUTH,
     WEST,
     UP,
-    DOWN
+    DOWN;
+    public int pp(){
+        return this.ordinal();
+    }
 }

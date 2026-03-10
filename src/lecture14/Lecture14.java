@@ -1,56 +1,72 @@
 package lecture14;
-import lecture05.inheritance.Creeper;
-import lecture05.inheritance.Entity;
-import lecture05.inheritance.Zombie;
+import lecture05.inheritance.*;
+import lecture14.examples.*;
 public class Lecture14 {
     public static void main(String[] args) {
-        System.out.println("=== PART A: GENERICS BASICS ===");
-        step1_rawTypesCrash();
-        step2_generics();
-        step3_invariance();
-        step4_arrayCovariance();
-        System.out.println("\n=== PART B: WILDCARDS & FLEXIBILITY ===");
-        step2_covariance_Extends();
-        step3_contravariance_Super();
-        step4_PECS();
+        System.out.println("---------------- Generics ----------------");
+        try {
+            rawTypeExample();
+        }catch (RuntimeException e){}
+        genericsExample();
+        System.out.println("---------------- Invariance, Variance, Co-Variance ----------------");
+        invarianceExample();
+        try{
+            covarianceExample();
+        }catch (ArrayStoreException e){}
+        contravarianceExample();
+        System.out.println();
+        System.out.println("---------------- Wildcards ----------------");
+        covarianceExtendsExample();
+        contravarianceSuperExample();
+        pecsExample();
     }
-    public static void step1_rawTypesCrash() {
-        System.out.println("=== 1. Raw Types ===");
+    public static void rawTypeExample() {
         RawSpawner mySpawner = new RawSpawner();
         mySpawner.setEntity(new Zombie());
+        Object o = mySpawner.spawn();
+        Creeper c = (Creeper) o;
+        c.hiss();
     }
-    private static void step2_generics() {
-        System.out.println("\n=== 2. Generic Safety ===");
+    private static void genericsExample() {
         Spawner<Zombie> zombieSpawner = new Spawner<>();
         zombieSpawner.setEntity(new Zombie());
         Zombie z = zombieSpawner.spawn();
+        z.groan();
+        Spawner<Creeper> creeperSpawner = new Spawner<>();
+        creeperSpawner.setEntity(new Creeper(0));
+        creeperSpawner.spawn().hiss();
     }
-    private static void step3_invariance() {
+    private static void invarianceExample() {
         Spawner<Zombie> zombieSpawner = new Spawner<>();
     }
-    private static void step4_arrayCovariance() {
-        System.out.println("\n=== 4. Array Covariance (Dangerous) ===");
+    private static void covarianceExample() {
         Zombie[] zombieArray = new Zombie[1];
         Entity[] entityArray = zombieArray;
         entityArray[0] = new Creeper(5);
     }
-    private static void step2_covariance_Extends() {
-        System.out.println("=== 2. Covariance (? extends) ===");
+    private static void contravarianceExample(){
+        System.out.println();
+        System.out.println("Supponiamo di avere covarianza");
+        Spawner<Zombie> zombieSpawner = new Spawner<>();
+        zombieSpawner.setEntity(new Zombie());
+        System.out.println();
+        System.out.println("Supponiamo di avere controvarianza");
+        Spawner<Entity> genericSpawner = new Spawner<>();
+        genericSpawner.setEntity(new Creeper(5));
+    }
+    private static void covarianceExtendsExample() {
         Spawner<Zombie> zombieSpawner = new Spawner<>();
         zombieSpawner.setEntity(new Zombie());
         Spawner<? extends Entity> source = zombieSpawner;
         Entity e = source.spawn();
         System.out.println("Spawned: " + e);
     }
-    private static void step3_contravariance_Super() {
-        System.out.println("\n=== 3. Contravariance (? super) ===");
+    private static void contravarianceSuperExample() {
         Spawner<Entity> generalSpawner = new Spawner<>();
         Spawner<? super Zombie> destination = generalSpawner;
         destination.setEntity(new Zombie());
-        System.out.println("Set template successfully.");
-        Object o = destination.spawn();
     }
-    private static void step4_PECS() {
+    private static void pecsExample() {
         Spawner<Zombie> zSource = new Spawner<>();
         zSource.setEntity(new Zombie());
         Spawner<Entity> eDest = new Spawner<>();
@@ -62,9 +78,4 @@ public class Lecture14 {
         consumer.setEntity(e);
         System.out.println("Transferred: " + e);
     }
-}
-class RawSpawner {
-    private Object entity;
-    public void setEntity(Object e) { this.entity = e; }
-    public Object spawn() { return entity; }
 }

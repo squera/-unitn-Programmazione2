@@ -1,86 +1,105 @@
 package lecture13;
+import lecture13.exceptions.*;
+import lecture13.tables.CraftingTable;
+import lecture13.tables.EnchantingTable;
+import javax.xml.crypto.Data;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 public class Lecture13 {
-        private static void step1_whyExceptions() {
-            System.out.println("=== 1. Why Exceptions? ===");
-            CraftingTable table = new CraftingTable();
-            try {
-                table.craftAdvanced("Diamond_Sword");
-            }
-            catch (RecipeMissingException e) {
-                System.out.println("Unknown Recipe: " + e.getMessage());
-                System.out.println(">> Opening Recipe Book...");
-            }
-            catch (InventoryFullException e) {
-                System.out.println("Inventory Full: " + e.getMessage());
-                System.out.println(">> Please clear a slot.");
-            }
-            catch (Exception e) {
-                System.out.println("Critical Error: " + e.getMessage());
-            }
-        }
-        private static void step2_checkedVsUnchecked() {
-            System.out.println("\n=== 2. Checked vs Unchecked ===");
-            try {
-                savePlayerData();
-            } catch (IOException e) {
-                System.out.println("Could not save game. Retrying...");
-            }
-        }
-        private static void step3_badCatching() {
-            try {
-                riskyMethod();
-            }
-            catch (Exception e) {
-            }
-        }
-    private static void step5_exceptionHierarchy() {
-        System.out.println("=== 5. Exception Hierarchy ===");
-        CraftingTable table = new CraftingTable();
+    public static void main(String[] args) {
+        System.out.println("---------------- Eccezioni ----------------");
+        exceptionsExample();
+        exceptionsAndConstructors();
+        deepenStackExample();
+        System.out.println("---------------- Runtime exceptions ----------------");
+        runtimeExceptionsExample();
+        System.out.println("---------------- Eccezioni e subtyping ----------------");
+        exceptionHierarchyExample();
+        System.out.println("---------------- Resources ----------------");
+        tryWithResourcesExample();
+    }
+    private static void exceptionsExample() {
+        CraftingTable table1 = new CraftingTable();
+        CraftingTable table2 = new CraftingTable();
+        int result = table1.craft_legacy("Sword");
+        if (result == -1) { System.out.println("Inventory Full"); }
+        else if (result == -2) { System.out.println("No Materials"); }
+        else { System.out.println("Crafted!"); }
         try {
-            table.craftAdvanced("UnknownSword");
+            throw new CraftingException("generic exc");
         }
         catch (RecipeMissingException e) {
-            System.out.println("[Specific Fix] Opening Tutorial: " + e.getMessage());
+            System.out.println("Unknown Recipe: " + e.getMessage());
+            System.out.println(">> Opening Recipe Book...");
         }
-        catch (CraftingException e) {
-            System.out.println("[General Crafting Fix] Returning items to player. Error: " + e.getMessage());
+        catch (InventoryFullException e) {
+            System.out.println("Inventory Full: " + e.getMessage());
+            System.out.println(">> Please clear a slot.");
         }
         catch (Exception e) {
-            System.out.println("Something terrible happened.");
+            System.out.println("Critical Error: " + e.getMessage());
+        }
+        try {
+            table1.craftGeneral("null");
+        } catch (CraftingException e) {}
+    }
+    private static void exceptionsAndConstructors(){
+        try {
+            CraftingTable c = new CraftingTable(3);
+        } catch (CraftingException e) {
         }
     }
-        private static void getInventorySlot(int i) {
-            throw new IndexOutOfBoundsException();
+    private static void deepenStackExample(){
+        try {
+            mid();
+        }catch (Exception e){}
+    }
+    private static void mid() throws IOException{
+        last();
+    }
+    private static void last() throws IOException{
+        throw new IOException();
+    }
+    private static void runtimeExceptionsExample() {
+        try { getInventorySlot(99); } catch (IndexOutOfBoundsException e) {
+            System.out.println("How did you figure out what exception to catch?");
         }
-        private static void savePlayerData() throws IOException {
-            throw new IOException("Disk Full");
-        }
-        private static void riskyMethod() {
-            throw new NullPointerException();
+        try {
+            int index = 0;
+            if (index < 9) {
+                getInventorySlot(index);
+            }
+        }catch (IndexOutOfBoundsException e){}
+        try {
+            riskyMethod();
+        } catch (NullPointerException e) {
+            System.out.println("Caught a NullPointer, but we really should have just checked if the object was null first!");
         }
     }
-class CraftingTable {
-    public void craftAdvanced(String item) throws CraftingException {
-        if (item.equals("UnknownThing")) {
-            throw new RecipeMissingException("What is a " + item + "?");
-        }
-        boolean hasSpace = false;
-        if (!hasSpace) {
-            throw new InventoryFullException("No empty slots available.");
-        }
+    private static void getInventorySlot(int i) {
+        throw new IndexOutOfBoundsException();
     }
-    public int craft_legacy(String item) {
-        if (item.equals("Bedrock")) return -1;
-        return 0;
+    private static void riskyMethod() {
+        throw new NullPointerException();
     }
-}
-class CraftingException extends Exception {
-    public CraftingException(String msg) { super(msg); }
-}
-class RecipeMissingException extends CraftingException {
-    public RecipeMissingException(String msg) { super(msg); }
-}
-class InventoryFullException extends CraftingException {
-    public InventoryFullException(String msg) { super(msg); }
+    private static void exceptionHierarchyExample() {
+        EnchantingTable enchantingTable = new EnchantingTable();
+        try {
+            enchantingTable.craftGeneral("Boots");
+            enchantingTable.craftAdvanced("Boots");
+        }catch (Exception e){}
+        CraftingTable ct = new EnchantingTable();
+        try {
+            ct.craftAdvanced("Boots");
+        }catch (Exception e){}
+    }
+    private static void tryWithResourcesExample(){
+        try (FileReader fr = new FileReader("asd");
+             BufferedReader br = new BufferedReader(fr)) {
+            br.readLine();
+        } catch (IOException e) {}
+        catch (Exception e) {}
+    }
 }

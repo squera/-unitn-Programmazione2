@@ -6,8 +6,6 @@ import lecture03.ackages.blocks.TNT;
 import lecture03.ackages.entities.Witch;
 import lecture03.static_globals.DragonEgg;
 import lecture03.static_globals.GameConstants;
-import lecture03.static_globals.factory_methods.Tree;
-import lecture03.static_globals.factory_methods.TreeFactory;
 public class Lecture3 {
     public static void main(String[] args) {
         System.out.println("---------------- Packages ----------------");
@@ -20,7 +18,6 @@ public class Lecture3 {
         System.out.println("---------------- Static ----------------");
         staticExample();
         singletonExample();
-        factoryMethodExample();
     }
     private static void packagesExample() {
         Player p = new Player();
@@ -50,6 +47,10 @@ public class Lecture3 {
     private static void staticExample() {
         System.out.println("Max Stack Size: " + GameConstants.MAX_STACK_SIZE);
         GameConstants g = new GameConstants();
+        int c = GameConstants.MAX_STACK_SIZE;
+        int s = g.SMALL_MAX_STACK_SIZE;
+        g.method();
+        g.printMOTD();
         GameConstants.MAX_STACK_SIZE = 1;
         System.err.println("Print on the error stream");
         System.currentTimeMillis();
@@ -60,11 +61,5 @@ public class Lecture3 {
         egg.teleport();
         DragonEgg egg2 = DragonEgg.getInstance();
         System.out.println("Is it the exact same egg? " + (egg == egg2));
-    }
-    private static void factoryMethodExample() {
-        Tree t1 = TreeFactory.createDarkOak();
-        Tree t2 = TreeFactory.createBirch();
-        System.out.println("Factory created: " + t1.type);
-        System.out.println("Factory created: " + t2.type);
     }
 }

@@ -1,6 +1,10 @@
 package lecture11;
 import lecture05.inheritance.*;
 import lecture10.arguments.*;
+import lecture11.bad.*;
+import lecture11.templateMethod.AbstractBlock;
+import lecture11.templateMethod.DiamondOre;
+import lecture11.templateMethod.GlassBlock;
 public class Lecture11 {
     public static void main(String[] args) {
         System.out.println("---------------- Object Memory Layout: la v-table ----------------");
