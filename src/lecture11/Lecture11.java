@@ -2,6 +2,7 @@ package lecture11;
 import lecture05.inheritance.*;
 import lecture10.arguments.*;
 import lecture11.bad.*;
+import lecture11.exercise.CherryBlock;
 import lecture11.templateMethod.AbstractBlock;
 import lecture11.templateMethod.DiamondOre;
 import lecture11.templateMethod.GlassBlock;
@@ -24,6 +25,7 @@ public class Lecture11 {
         m.mine(pd);
         m.mineWithSubcall(pp);
         m.mineWithSubcall(pd);
+        m.mineWithSubcall(dd);
     }
     private static void castingAndInstanceof() {
         Entity genericMob1 = new Creeper(5);
@@ -31,6 +33,9 @@ public class Lecture11 {
             Creeper c = (Creeper) genericMob1;
             System.out.println("Watch out!");
             c.hiss();
+        }
+        if (genericMob1 instanceof Entity){
+            System.out.println("Works with superclasses");
         }
     }
     private static void runBadInstanceExample() {
@@ -44,5 +49,7 @@ public class Lecture11 {
         AbstractBlock glass = new GlassBlock();
         diamondOre.destroyBlock();
         glass.destroyBlock();
+        AbstractBlock cherry = new CherryBlock();
+        cherry.destroyBlock();
     }
 }

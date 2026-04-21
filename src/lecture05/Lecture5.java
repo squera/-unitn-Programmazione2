@@ -19,7 +19,7 @@ public class Lecture5 {
         c.teleport(20, 64);
         z.groan();
         c.hiss();
-        Entity e = new Entity();
+        Entity e = new Entity(10,10);
         System.out.println();
     }
     private static void inheritanceAndConstructorsExample(){
@@ -40,17 +40,24 @@ public class Lecture5 {
     private static void subtypingExample() {
         Entity gr = new Zombie();
         Entity[] allMobs = new Entity[3];
-        allMobs[0] = new Zombie();
+        Zombie z = new Zombie();
+        allMobs[0] = z ;
         allMobs[1] = new Creeper(0);
-        allMobs[2] = new Entity();
+        allMobs[2] = new Entity(10,10);
         System.out.println(">> Moving all mobs...");
         for (Entity e : allMobs) {
-            e.teleport(0, 0);
+            gotoSpawn(e);
+            z.groan();
         }
+    }
+    private static void gotoSpawn(Entity e){
+        e.teleport(0,0);
     }
     private static void classObjectExample(){
         Object o = new Object();
         System.out.println( o.getClass() );
+        Entity e = new Zombie();
+        System.out.println( e.getClass() );
         System.out.println( o.toString() );
         System.out.println( o.equals(o) );
         System.out.println( o.hashCode() );

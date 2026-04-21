@@ -7,5 +7,10 @@ public class DiamondBlock extends Block {
     public final void onBreak() {
         System.out.println("DiamondBlock: *CLING* (Drops Diamonds!)");
     }
-    public void getDiamond(){}
+    public void getDiamond(){
+        this.getRegistryCalculations();
+    }
+    public String getRegistryCalculations(){
+        return "D";
+    }
 }

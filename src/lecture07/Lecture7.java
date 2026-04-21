@@ -43,6 +43,8 @@ public class Lecture7 {
         Boss b = w;
         b.announceArrival();
         b.performSpecialAttack();
+        Boss b2 = new Wither();
+        b2.announceArrival();
     }
     private static void caller_calleeExample(){
         Zombie z = new Zombie();

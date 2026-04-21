@@ -83,8 +83,8 @@ public class Lecture10 {
     private static void argBindingExample() {
         Miner steve = new Miner();
         DiamondPick realDiamond = new DiamondPick();
-        steve.mine(realDiamond);
         Pick hiddenDiamond = new DiamondPick();
+        steve.mine(realDiamond);
         steve.mine(hiddenDiamond);
     }
     private static void argBindingAndSubcallExample() {
@@ -93,5 +93,6 @@ public class Lecture10 {
         Pick pd = new DiamondPick();
         steve.mineWithSubcall(pp);
         steve.mineWithSubcall(pd);
+        DiamondPick dd = new DiamondPick();
     }
 }

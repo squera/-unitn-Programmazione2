@@ -4,10 +4,9 @@ public class Creeper extends Entity {
         System.out.println("Hisss");
     }
     public Creeper(int x){
-        System.out.print(" in Creeper() ");
+        System.out.print(" in Creeper(x) ");
     }
     public Creeper(int x, int y){
-        super(x, y);
         System.out.print(" in Creeper(x,y) ");
     }
 }

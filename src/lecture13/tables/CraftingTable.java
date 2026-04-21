@@ -13,7 +13,6 @@ public class CraftingTable {
         return new Block("Boat");
     }
     public Block craftGeneral(String item) throws CraftingException{
-        this.craftAdvanced(item);
         return this.craftAdvanced(item);
     }
     public int craft_legacy(String item) {

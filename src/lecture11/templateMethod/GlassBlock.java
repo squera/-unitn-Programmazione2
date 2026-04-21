@@ -5,7 +5,7 @@ public class GlassBlock extends AbstractBlock {
         System.out.println(" Dropped: Nothing (It shattered)");
     }
     @Override
-    protected  void playBreakSound() {
+    protected void playBreakSound() {
         System.out.println("*Tink* (Glass Sound)");
     }
 }

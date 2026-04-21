@@ -37,6 +37,7 @@ public class Lecture14 {
         creeperSpawner.spawn().hiss();
     }
     private static void invarianceExample() {
+        Entity e = new Zombie();
         Spawner<Zombie> zombieSpawner = new Spawner<>();
     }
     private static void covarianceExample() {
@@ -65,6 +66,7 @@ public class Lecture14 {
         Spawner<Entity> generalSpawner = new Spawner<>();
         Spawner<? super Zombie> destination = generalSpawner;
         destination.setEntity(new Zombie());
+        Entity zz = (Entity) destination.spawn();
     }
     private static void pecsExample() {
         Spawner<Zombie> zSource = new Spawner<>();
@@ -77,5 +79,23 @@ public class Lecture14 {
         Entity e = producer.spawn();
         consumer.setEntity(e);
         System.out.println("Transferred: " + e);
+    }
+    private static void combinations(){
+        Spawner<? extends Entity> see = new Spawner<>();
+        Spawner<? extends Zombie> sez = new Spawner<>();
+        Spawner<? super Zombie> ssz = new Spawner<>();
+        Spawner<? super Drowned> ssd = new Spawner<>();
+        Spawner<Drowned> sd = new Spawner<>();
+        Spawner<Entity> se = new Spawner<>();
+        Spawner<Zombie> sz = new Spawner<>();
+        see = se;
+        sez = sz;
+        ssz = sz;
+        ssd = sd;
+        see = sd;
+        sez = sd;
+        see = sez;
+        ssd = se;
+        ssd = sz;
     }
 }

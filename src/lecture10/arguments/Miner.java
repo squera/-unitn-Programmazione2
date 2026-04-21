@@ -10,8 +10,4 @@ public class Miner {
         System.out.println("-> Used Generic Mining (Slow)");
         p.pick();
     }
-    public void mineWithSubcall(DiamondPick p) {
-        System.out.println("-> Used Diamond Mining (Instant!)");
-        p.pick();
-    }
 }

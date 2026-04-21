@@ -2,11 +2,9 @@ package lecture13;
 import lecture13.exceptions.*;
 import lecture13.tables.CraftingTable;
 import lecture13.tables.EnchantingTable;
-import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Date;
 public class Lecture13 {
     public static void main(String[] args) {
         System.out.println("---------------- Eccezioni ----------------");
@@ -48,8 +46,7 @@ public class Lecture13 {
     private static void exceptionsAndConstructors(){
         try {
             CraftingTable c = new CraftingTable(3);
-        } catch (CraftingException e) {
-        }
+        } catch (CraftingException e) {}
     }
     private static void deepenStackExample(){
         try {
