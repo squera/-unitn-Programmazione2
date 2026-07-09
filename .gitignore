@@ -7,3 +7,4 @@
 *.iml
 src/lecture01/2-ripasso/cmake-build-debug/*
 *.check_cache
+*.DS_Store
